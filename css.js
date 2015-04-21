@@ -77,9 +77,9 @@ function applyReworkAssets(css, opts, dirName) {
   }
 }
 
-function applyReworkPlugins(css, opts, dirName) {
-  if (opts.plugins) {
-    opts.plugins.forEach(function useOptionPlugins(plugin) {
+function applyReworkPlugins(css, plugins, dirName) {
+  if (plugins) {
+    plugins.forEach(function useOptionPlugins(plugin) {
       css.use(getPlugin(plugin, dirName))
     })
   }
@@ -126,7 +126,8 @@ function applyRework(opts, resolvedEntry) {
 
   applyReworkVars(css, opts)
   applyReworkAssets(css, opts, dirName)
-  applyReworkPlugins(css, opts, dirName)
+  applyReworkPlugins(css, opts.plugins, dirName)
+  applyReworkPlugins(css, opts.postPlugins, dirName);
 
   return css.toString({
       sourcemap: opts.debug || opts.sourcemap
